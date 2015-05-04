@@ -1,0 +1,5 @@
+[package]
+
+name = "rust-brainfuck"
+version = "0.0.1"
+authors = ["Samuel Vandamme <samuel@sava.be>"]
