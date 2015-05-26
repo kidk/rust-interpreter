@@ -1,5 +1,5 @@
-const CODE_MAX_SIZE: usize = 8192 * 2 * 2;
-const CODE_MAX_DATA: usize = 8192 * 2;
+const CODE_MAX_SIZE: usize = 1024 * 64;
+const CODE_MAX_DATA: usize = 1024 * 32;
 
 const OP_VAL_INCR: u8 = 1;
 const OP_VAL_DECR: u8 = 2;
