@@ -1,3 +1,5 @@
+use std::iter::repeat;
+
 const CODE_MAX_SIZE: usize = 1024 * 64;
 const CODE_MAX_DATA: usize = 1024 * 32;
 
@@ -20,8 +22,8 @@ pub struct Operation {
 pub struct Program {
     pc: usize,
     ptr: usize,
-    data: [u32; CODE_MAX_DATA],
-    code: [Operation; CODE_MAX_SIZE]
+    data: Vec<u32>,
+    code: Vec<Operation>
 }
 
 impl Program {
@@ -30,8 +32,8 @@ impl Program {
         Program {
             pc: 0,
             ptr: 0,
-            data: [0u32; CODE_MAX_DATA],
-            code: [Operation { op: 0u8, ex: 0u32}; CODE_MAX_SIZE]
+            data: Vec::new(), // Init empty, because it is reset before run
+            code: repeat(Operation { op: 0u8, ex: 0u32}).take(CODE_MAX_SIZE).collect()
         }
     }
 
@@ -49,7 +51,7 @@ impl Program {
     {
         self.pc = 0;
         self.ptr = 0;
-        self.data = [0u32; CODE_MAX_DATA];
+        self.data = repeat(0u32).take(CODE_MAX_DATA).collect();
     }
 
     pub fn run(&mut self)
