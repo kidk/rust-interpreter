@@ -7,12 +7,12 @@ use std::env;
 mod interpreter;
 
 fn main() {
-    //let args: Vec<_> = env::args().collect();
+    let args: Vec<_> = env::args().collect();
 
-    //let content = read_file(&args[1]);
+    let content = read_file(&args[1]);
     let mut program = interpreter::Program::new();
-    //interpreter::BrainfuckParser::parse(&content, &mut program);
-    //program.run();
+    interpreter::BrainfuckParser::parse(&content, &mut program);
+    program.run();
     //program.debug();
 }
 

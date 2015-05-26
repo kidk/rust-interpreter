@@ -14,7 +14,7 @@ const OP_END: u8 = 9;
 #[derive(Copy, Clone)]
 pub struct Operation {
     op: u8,
-    ex: usize
+    ex: u32
 }
 
 pub struct Program {
@@ -31,7 +31,7 @@ impl Program {
             pc: 0,
             ptr: 0,
             data: [0u32; CODE_MAX_DATA],
-            code: [Operation { op: 0u8, ex: 0usize}; CODE_MAX_SIZE]
+            code: [Operation { op: 0u8, ex: 0u32}; CODE_MAX_SIZE]
         }
     }
 
@@ -63,12 +63,12 @@ impl Program {
                 OP_PNT_DECR => if self.ptr > 0 { self.ptr -= 1 },
                 OP_LOOP_START => {
                     if self.data[self.ptr] == 0 {
-                        self.pc = self.code[self.pc].ex;
+                        self.pc = self.code[self.pc].ex as usize;
                     }
                 },
                 OP_LOOP_END => {
                     if self.data[self.ptr] > 0 {
-                        self.pc = self.code[self.pc].ex;
+                        self.pc = self.code[self.pc].ex as usize;
                     }
                 },
                 OP_OUT => {
@@ -132,9 +132,9 @@ impl BrainfuckParser {
                         None => break, // empty
                         Some(x) => x,
                     };
-                    program.set(pc, Operation { op: OP_LOOP_END, ex: pc_jmp });
+                    program.set(pc, Operation { op: OP_LOOP_END, ex: pc_jmp as u32 });
                     let mut op = program.get(pc_jmp);
-                    op.ex = pc;
+                    op.ex = pc as u32;
                     program.set(pc_jmp, op);
                     },
                 '.' => program.set(pc, Operation { op: OP_OUT, ex: 0 }),
