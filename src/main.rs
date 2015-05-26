@@ -1,20 +1,19 @@
-
 use std::path::Path;
 use std::fs::File;
 use std::error::Error;
 use std::io::Read;
 use std::env;
 
-mod bf;
+mod interpreter;
 
 fn main() {
     let args: Vec<_> = env::args().collect();
 
     let content = read_file(&args[1]);
-
-    let code = bf::BrainfuckParser::parse(&content);
-    let mut interpreter = bf::BrainfuckInterpreter::new();
-    interpreter.run(code);
+    let mut program = interpreter::Program::new();
+    interpreter::BrainfuckParser::parse(&content, &mut program);
+    program.run();
+    //program.debug();
 }
 
 fn read_file(filename: &str) -> String
